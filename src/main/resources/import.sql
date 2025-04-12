@@ -1,0 +1,10 @@
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (true, 7, 1, 101);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (true, 5, 11, 201);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (false, 4, 12, 202);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (true, 6, 13, 203);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (false, 7, 14, 204);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (true, 3, 15, 205);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (false, 2, 16, 206);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (true, 8, 17, 207);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (true, 9, 18, 208);
+INSERT INTO programa (activo, duracion, id_coordinador, id_facultad) VALUES (false, 10, 19, 209);

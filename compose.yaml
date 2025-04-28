@@ -1,0 +1,36 @@
+services:
+  programa-service:
+    image: sebastianhenaogamboa/programa-service:latest
+    container_name: programa-service
+    restart: unless-stopped
+    depends_on:
+      - db1
+    ports:
+      - "8082:8082"
+      - "8083:8083"
+    environment:
+      - DB_USER=userdb
+      - DB_PASS=passdb
+      - JPA_DDL=create-drop
+      - DB_HOST=jdbc:postgresql://db1:5432/curso_springboot
+    networks:
+      - mynetwork
+
+  db1:
+    image: postgres:latest
+    container_name: db1
+    restart: unless-stopped
+    ports:
+      - "5433:5433"
+    environment:
+      POSTGRES_DB: curso_springboot
+      POSTGRES_USER: userdb
+      POSTGRES_PASSWORD: passdb
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

@@ -4,8 +4,12 @@ import com.edu.uceva.programaservice.domain.exception.NoHayProgramasException;
 import com.edu.uceva.programaservice.domain.exception.PaginaSinProgramasException;
 import com.edu.uceva.programaservice.domain.exception.ProgramaNoEncontradoException;
 import com.edu.uceva.programaservice.domain.exception.ValidationException;
+import com.edu.uceva.programaservice.domain.model.FacultadDTO;
 import com.edu.uceva.programaservice.domain.model.Programa;
+import com.edu.uceva.programaservice.domain.model.UsuarioDTO;
+import com.edu.uceva.programaservice.domain.services.IFacultadClient;
 import com.edu.uceva.programaservice.domain.services.IProgramaService;
+import com.edu.uceva.programaservice.domain.services.IUsuarioClient;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,10 +33,14 @@ public class ProgramaRestController {
     private static final String MENSAJE = "mensaje";
     private static final String PROGRAMA = "programa";
     private static final String PROGRAMAS = "programas";
+    private final IUsuarioClient usuarioClient;
+    private final IFacultadClient facultadClient;
 
     // Inyeccion de dependencia del servicio que proporciona servicios de CRUD
-    public ProgramaRestController(IProgramaService programaService) {
+    public ProgramaRestController(IProgramaService programaService, IUsuarioClient usuarioClient, IFacultadClient facultadClient) {
         this.programaService = programaService;
+        this.usuarioClient = usuarioClient;
+        this.facultadClient = facultadClient;
     }
 
     // Listar todos los programas
@@ -66,6 +74,8 @@ public class ProgramaRestController {
         }
         Map<String, Object> response = new HashMap<>();
         Programa nuevoPrograma = programaService.save(programa);
+        comprobarUsuario(nuevoPrograma.getIdCoordinador());
+        comprobarFacultad(nuevoPrograma.getIdFacultad());
         response.put(MENSAJE, "El programa ha sido creado con exito");
         response.put(PROGRAMA, nuevoPrograma);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -92,6 +102,8 @@ public class ProgramaRestController {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }
+        comprobarUsuario(programa.getIdCoordinador());
+        comprobarFacultad(programa.getIdFacultad());
         programaService.findById(programa.getId())
                 .orElseThrow(() -> new ProgramaNoEncontradoException(programa.getId()));
         Map<String, Object> response = new HashMap<>();
@@ -110,5 +122,26 @@ public class ProgramaRestController {
         response.put(MENSAJE, "El programa ha sido encontrado con exito");
         response.put(PROGRAMA, programa);
         return ResponseEntity.ok(response);
+    }
+    // Comprobar si el usuario (coordinador) existe
+    public void comprobarUsuario(Long idDocente){
+        Map<String, List<UsuarioDTO>> response = usuarioClient.idusuario();
+        List<UsuarioDTO> docentes = response.get("usuarios");
+        boolean existe = docentes.stream()
+                .anyMatch(d -> d.getId() == idDocente);
+        if (!existe){
+            throw new RuntimeException(("El docente con id: "+ idDocente + " no existe"));
+        }
+    }
+
+    // Comprobar si la facultad existe
+    public void comprobarFacultad(Long idFacultad){
+        Map<String, List<FacultadDTO>> response = facultadClient.idfacultad();
+        List<FacultadDTO> facultades = response.get("facultads");
+        boolean existe = facultades.stream()
+                .anyMatch(f -> f.getId() == idFacultad);
+        if (!existe){
+            throw new RuntimeException(("La facultad con id: "+ idFacultad + " no existe"));
+        }
     }
 }

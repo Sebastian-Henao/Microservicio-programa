@@ -4,7 +4,7 @@ management:
       exposure:
         include: '*'
   server:
-    port: '8083'
+    port: '8081'
 spring:
   main:
     allow-circular-references: 'true'
@@ -48,4 +48,22 @@ app:
     version: v1
   version: 0.14.0
 server:
-  port: ${PORT:8080}
+  port: '8080'
+
+facultad-service:
+  url: http://localhost:8086
+
+usuario-service:
+  url: http://localhost:8089
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+  instance:
+    prefer-ip-address: true

@@ -9,6 +9,6 @@ import java.util.Map;
 
 @FeignClient(name = "usuarioservice")
 public interface IUsuarioClient {
-    @GetMapping("/api/v1/usuario-service/usuarios")
+    @GetMapping("/api/v1/usuario-service/usuarios/coordinadores")
     Map<String, List<UsuarioDTO>> idusuario();
 }

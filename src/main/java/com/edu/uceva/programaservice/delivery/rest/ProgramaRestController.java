@@ -124,13 +124,13 @@ public class ProgramaRestController {
         return ResponseEntity.ok(response);
     }
     // Comprobar si el usuario (coordinador) existe
-    public void comprobarUsuario(Long idDocente){
+    public void comprobarUsuario(Long idCoordinador){
         Map<String, List<UsuarioDTO>> response = usuarioClient.idusuario();
         List<UsuarioDTO> docentes = response.get("usuarios");
         boolean existe = docentes.stream()
-                .anyMatch(d -> d.getId() == idDocente);
+                .anyMatch(d -> d.getId() == idCoordinador);
         if (!existe){
-            throw new RuntimeException(("El docente con id: "+ idDocente + " no existe"));
+            throw new RuntimeException(("El coordinador con id: "+ idCoordinador + " no existe"));
         }
     }
 

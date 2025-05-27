@@ -9,6 +9,6 @@ import java.util.Map;
 
 @FeignClient(name = "Facultad-Service")
 public interface IFacultadClient {
-    @GetMapping("api/v1/facultad-service/facultads")
+    @GetMapping("api/v1/Facultad-Microservice/facultades")
     Map<String, List<FacultadDTO>> idfacultad();
 }

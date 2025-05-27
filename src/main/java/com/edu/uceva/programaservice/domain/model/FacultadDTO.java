@@ -5,7 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,11 +18,12 @@ public class FacultadDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "La Facultad Debe Estar Vinculada A Un Decano")
-    @Column(nullable = false)
-    private Long idDecano;
-
-    @NotBlank(message = "La Facultad Debe Tener Un Nombre")
-    @Column(nullable = false)
+    @NotEmpty(message ="No puede estar vacio")
+    @Size(min=2, message="El tamaño tiene que tener minimo 2 caracteres")
+    @Column(nullable=false)
     private String nombre;
+
+    @NotNull(message = "Debe ingresar el nombre de la facultad")
+    @Column(nullable = false)
+    private Long id_decano;
 }

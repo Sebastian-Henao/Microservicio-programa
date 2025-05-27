@@ -74,8 +74,8 @@ public class ProgramaRestController {
         }
         Map<String, Object> response = new HashMap<>();
         Programa nuevoPrograma = programaService.save(programa);
-        /**comprobarUsuario(nuevoPrograma.getIdCoordinador());
-        comprobarFacultad(nuevoPrograma.getIdFacultad());**/
+        comprobarUsuario(nuevoPrograma.getIdCoordinador());
+        comprobarFacultad(nuevoPrograma.getIdFacultad());
         response.put(MENSAJE, "El programa ha sido creado con exito");
         response.put(PROGRAMA, nuevoPrograma);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -124,7 +124,7 @@ public class ProgramaRestController {
         return ResponseEntity.ok(response);
     }
     // Comprobar si el usuario (coordinador) existe
-    /**public void comprobarUsuario(Long idCoordinador){
+    public void comprobarUsuario(Long idCoordinador){
         Map<String, List<UsuarioDTO>> response = usuarioClient.idusuario();
         List<UsuarioDTO> docentes = response.get("usuarios");
         boolean existe = docentes.stream()
@@ -143,5 +143,5 @@ public class ProgramaRestController {
         if (!existe){
             throw new RuntimeException(("La facultad con id: "+ idFacultad + " no existe"));
         }
-    }**/
+    }
 }

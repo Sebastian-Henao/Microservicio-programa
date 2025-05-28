@@ -72,10 +72,10 @@ public class ProgramaRestController {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }
+        comprobarUsuario(programa.getIdCoordinador());
+        comprobarFacultad(programa.getIdFacultad());
         Map<String, Object> response = new HashMap<>();
         Programa nuevoPrograma = programaService.save(programa);
-        comprobarUsuario(nuevoPrograma.getIdCoordinador());
-        comprobarFacultad(nuevoPrograma.getIdFacultad());
         response.put(MENSAJE, "El programa ha sido creado con exito");
         response.put(PROGRAMA, nuevoPrograma);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -102,8 +102,8 @@ public class ProgramaRestController {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }
-        /**comprobarUsuario(programa.getIdCoordinador());
-        comprobarFacultad(programa.getIdFacultad());**/
+        comprobarUsuario(programa.getIdCoordinador());
+        comprobarFacultad(programa.getIdFacultad());
         programaService.findById(programa.getId())
                 .orElseThrow(() -> new ProgramaNoEncontradoException(programa.getId()));
         Map<String, Object> response = new HashMap<>();
@@ -137,9 +137,9 @@ public class ProgramaRestController {
     // Comprobar si la facultad existe
     public void comprobarFacultad(Long idFacultad){
         Map<String, List<FacultadDTO>> response = facultadClient.idfacultad();
-        List<FacultadDTO> facultades = response.get("facultads");
+        List<FacultadDTO> facultades = response.get("facultades");
         boolean existe = facultades.stream()
-                .anyMatch(f -> f.getId() == idFacultad);
+                .anyMatch(f -> f.getId().equals(idFacultad));
         if (!existe){
             throw new RuntimeException(("La facultad con id: "+ idFacultad + " no existe"));
         }

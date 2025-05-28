@@ -33,8 +33,8 @@ public class Programa {
     private long idFacultad;
     @NotEmpty(message = "Debe ingresar el nivel académico del programa")
     @Pattern(
-        regexp = "^(Técnico|Tecnológico|Profesional|Especialización|Maestría|Doctorado)$",
-        message = "El nivel académico debe ser Técnico, Tecnológico, Profesional, Especialización, Maestría o Doctorado"
+        regexp = "^(Tecnico|Tecnologico|Profesional|Especializacion|Maestria|Doctorado)$",
+        message = "El nivel académico debe ser Tecnico, Tecnologico, Profesional, Especializacion, Maestria o Doctorado"
     )
     private String nivelAcademico;
     @NotBlank(message = "El nombre del programa no puede estar vacío")

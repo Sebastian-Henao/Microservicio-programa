@@ -49,3 +49,21 @@ app:
   version: 0.14.0
 server:
   port: ${PORT:8080}
+
+facultad-service:
+  url: http://localhost:8088
+
+usuario-service:
+  url: http://localhost:8086
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+  instance:
+    prefer-ip-address: true
